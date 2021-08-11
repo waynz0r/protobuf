@@ -55,8 +55,10 @@ import (
 	"github.com/gogo/protobuf/types"
 )
 
-const secondInNanos = int64(time.Second / time.Nanosecond)
-const maxSecondsInDuration = 315576000000
+const (
+	secondInNanos        = int64(time.Second / time.Nanosecond)
+	maxSecondsInDuration = 315576000000
+)
 
 // Marshaler is a configurable object for converting between
 // protocol buffer objects and a JSON representation for them.
@@ -81,6 +83,9 @@ type Marshaler struct {
 	// fully-qualified type name from the type URL and pass that to
 	// proto.MessageType(string).
 	AnyResolver AnyResolver
+
+	// Whether to marshal int64 and uint64 values as integers as opposed to strings.
+	Int64Uint64asIntegers bool
 }
 
 // AnyResolver takes a type URL, present in an Any message, and resolves it into
@@ -299,7 +304,7 @@ func (m *Marshaler) marshalObject(out *errWriter, v proto.Message, indent, typeU
 			continue
 		}
 
-		//this is not a protobuf field
+		// this is not a protobuf field
 		if valueField.Tag.Get("protobuf") == "" && valueField.Tag.Get("protobuf_oneof") == "" {
 			continue
 		}
@@ -518,7 +523,6 @@ func (m *Marshaler) marshalField(out *errWriter, prop *proto.Properties, v refle
 
 // marshalValue writes the value to the Writer.
 func (m *Marshaler) marshalValue(out *errWriter, prop *proto.Properties, v reflect.Value, indent string) error {
-
 	v = reflect.Indirect(v)
 
 	// Handle nil pointer
@@ -736,7 +740,7 @@ func (m *Marshaler) marshalValue(out *errWriter, prop *proto.Properties, v refle
 	if err != nil {
 		return err
 	}
-	needToQuote := string(b[0]) != `"` && (v.Kind() == reflect.Int64 || v.Kind() == reflect.Uint64)
+	needToQuote := !m.Int64Uint64asIntegers && string(b[0]) != `"` && (v.Kind() == reflect.Int64 || v.Kind() == reflect.Uint64)
 	if needToQuote {
 		out.write(`"`)
 	}
@@ -1127,7 +1131,7 @@ func (u *Unmarshaler) unmarshalValue(target reflect.Value, inputValue json.RawMe
 		if targetType.Elem().Kind() == reflect.Uint8 {
 			outRef := reflect.New(targetType)
 			outVal := outRef.Interface()
-			//CustomType with underlying type []byte
+			// CustomType with underlying type []byte
 			if _, ok := outVal.(interface {
 				UnmarshalJSON([]byte) error
 			}); ok {
