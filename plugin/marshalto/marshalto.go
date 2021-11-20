@@ -70,7 +70,7 @@ option (gogoproto.marshaler_all) = true;
 message B {
 	option (gogoproto.description) = true;
 	optional A A = 1 [(gogoproto.nullable) = false, (gogoproto.embed) = true];
-	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/gogo/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
+	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/waynz0r/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
 }
 
 given to the marshalto plugin, will generate the following code:
@@ -149,11 +149,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/proto"
-	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	"github.com/gogo/protobuf/vanity"
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/proto"
+	descriptor "github.com/waynz0r/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
+	"github.com/waynz0r/protobuf/vanity"
 )
 
 type NumGen interface {
@@ -891,14 +891,14 @@ func (p *marshalto) Generate(file *generator.FileDescriptor) {
 	p.localName = generator.FileName(file)
 
 	p.mathPkg = p.NewImport("math")
-	p.sortKeysPkg = p.NewImport("github.com/gogo/protobuf/sortkeys")
-	p.protoPkg = p.NewImport("github.com/gogo/protobuf/proto")
+	p.sortKeysPkg = p.NewImport("github.com/waynz0r/protobuf/sortkeys")
+	p.protoPkg = p.NewImport("github.com/waynz0r/protobuf/proto")
 	if !gogoproto.ImportsGoGoProto(file.FileDescriptorProto) {
 		p.protoPkg = p.NewImport("github.com/golang/protobuf/proto")
 	}
 	p.errorsPkg = p.NewImport("errors")
 	p.binaryPkg = p.NewImport("encoding/binary")
-	p.typesPkg = p.NewImport("github.com/gogo/protobuf/types")
+	p.typesPkg = p.NewImport("github.com/waynz0r/protobuf/types")
 
 	for _, message := range file.Messages() {
 		if message.DescriptorProto.GetOptions().GetMapEntry() {
@@ -1000,7 +1000,7 @@ func (p *marshalto) Generate(file *generator.FileDescriptor) {
 		p.P(`}`)
 		p.P()
 
-		//Generate MarshalTo methods for oneof fields
+		// Generate MarshalTo methods for oneof fields
 		m := proto.Clone(message.DescriptorProto).(*descriptor.DescriptorProto)
 		for _, field := range m.Field {
 			oneof := field.OneofIndex != nil
@@ -1047,7 +1047,6 @@ func (p *marshalto) Generate(file *generator.FileDescriptor) {
 		p.Out()
 		p.P(`}`)
 	}
-
 }
 
 func (p *marshalto) reverseListRange(expression ...string) string {

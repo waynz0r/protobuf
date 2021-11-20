@@ -45,11 +45,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/jsonpb"
-	. "github.com/gogo/protobuf/proto"
-	pb3 "github.com/gogo/protobuf/proto/proto3_proto"
-	. "github.com/gogo/protobuf/proto/test_proto"
-	descriptorpb "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/waynz0r/protobuf/jsonpb"
+	. "github.com/waynz0r/protobuf/proto"
+	pb3 "github.com/waynz0r/protobuf/proto/proto3_proto"
+	. "github.com/waynz0r/protobuf/proto/test_proto"
+	descriptorpb "github.com/waynz0r/protobuf/protoc-gen-gogo/descriptor"
 )
 
 var globalO *Buffer
@@ -582,7 +582,6 @@ func TestEncodeDecode2(t *testing.T) {
 			"98197f"+ // field 403, encoding 0, value 127
 			"a519e0ffffff"+ // field 404, encoding 5, -32 fixed32
 			"a919c0ffffffffffffff") // field 405, encoding 1, -64 fixed64
-
 }
 
 // All default fields set to their default value by hand
@@ -640,7 +639,6 @@ func TestEncodeDecode3(t *testing.T) {
 			"98197f"+ // field 403, encoding 0, value 127
 			"a519e0ffffff"+ // field 404, encoding 5, -32 fixed32
 			"a919c0ffffffffffffff") // field 405, encoding 1, -64 fixed64
-
 }
 
 // All required fields set, defaults provided, all non-defaulted optional fields have values.
@@ -723,7 +721,6 @@ func TestEncodeDecode4(t *testing.T) {
 			"98197f"+ // field 403, encoding 0, value 127
 			"a519e0ffffff"+ // field 404, encoding 5, -32 fixed32
 			"a919c0ffffffffffffff") // field 405, encoding 1, -64 fixed64
-
 }
 
 // All required fields set, defaults provided, all repeated fields given two values.
@@ -821,7 +818,6 @@ func TestEncodeDecode5(t *testing.T) {
 			"98197f"+ // field 403, encoding 0, value 127
 			"a519e0ffffff"+ // field 404, encoding 5, -32 fixed32
 			"a919c0ffffffffffffff") // field 405, encoding 1, -64 fixed64
-
 }
 
 // All required fields set, all packed repeated fields given two values.
@@ -885,7 +881,6 @@ func TestEncodeDecode6(t *testing.T) {
 			"20000000e0ffffff"+ // value 32, value -32
 			"ca1f10"+ // field 505, encoding 2, 16 bytes
 			"4000000000000000c0ffffffffffffff") // value 64, value -64
-
 }
 
 // Test that we can encode empty bytes fields.

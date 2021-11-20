@@ -40,10 +40,10 @@ import (
 	"strings"
 	"testing"
 
-	pb "github.com/gogo/protobuf/jsonpb/jsonpb_test_proto"
-	"github.com/gogo/protobuf/proto"
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	"github.com/gogo/protobuf/types"
+	pb "github.com/waynz0r/protobuf/jsonpb/jsonpb_test_proto"
+	"github.com/waynz0r/protobuf/proto"
+	proto3pb "github.com/waynz0r/protobuf/proto/proto3_proto"
+	"github.com/waynz0r/protobuf/types"
 )
 
 var (
@@ -417,24 +417,38 @@ var marshalingTests = []struct {
 	{"repeated fields pretty object", marshalerAllOptions, repeatsObject, repeatsObjectPrettyJSON},
 	{"nested message/enum flat object", marshaler, complexObject, complexObjectJSON},
 	{"nested message/enum pretty object", marshalerAllOptions, complexObject, complexObjectPrettyJSON},
-	{"enum-string flat object", Marshaler{},
-		&pb.Widget{Color: pb.Widget_BLUE.Enum()}, `{"color":"BLUE"}`},
-	{"enum-value pretty object", Marshaler{EnumsAsInts: true, Indent: " "},
-		&pb.Widget{Color: pb.Widget_BLUE.Enum()}, colorPrettyJSON},
-	{"unknown enum value object", marshalerAllOptions,
-		&pb.Widget{Color: pb.Widget_Color(1000).Enum(), RColor: []pb.Widget_Color{pb.Widget_RED}}, colorListPrettyJSON},
-	{"repeated proto3 enum", Marshaler{},
+	{
+		"enum-string flat object",
+		Marshaler{},
+		&pb.Widget{Color: pb.Widget_BLUE.Enum()}, `{"color":"BLUE"}`,
+	},
+	{
+		"enum-value pretty object",
+		Marshaler{EnumsAsInts: true, Indent: " "},
+		&pb.Widget{Color: pb.Widget_BLUE.Enum()}, colorPrettyJSON,
+	},
+	{
+		"unknown enum value object", marshalerAllOptions,
+		&pb.Widget{Color: pb.Widget_Color(1000).Enum(), RColor: []pb.Widget_Color{pb.Widget_RED}}, colorListPrettyJSON,
+	},
+	{
+		"repeated proto3 enum",
+		Marshaler{},
 		&proto3pb.Message{RFunny: []proto3pb.Message_Humour{
 			proto3pb.Message_PUNS,
 			proto3pb.Message_SLAPSTICK,
 		}},
-		`{"rFunny":["PUNS","SLAPSTICK"]}`},
-	{"repeated proto3 enum as int", Marshaler{EnumsAsInts: true},
+		`{"rFunny":["PUNS","SLAPSTICK"]}`,
+	},
+	{
+		"repeated proto3 enum as int",
+		Marshaler{EnumsAsInts: true},
 		&proto3pb.Message{RFunny: []proto3pb.Message_Humour{
 			proto3pb.Message_PUNS,
 			proto3pb.Message_SLAPSTICK,
 		}},
-		`{"rFunny":[1,2]}`},
+		`{"rFunny":[1,2]}`,
+	},
 	{"empty value", marshaler, &pb.Simple3{}, `{}`},
 	{"empty value emitted", Marshaler{EmitDefaults: true}, &pb.Simple3{}, `{"dub":0}`},
 	{"empty repeated emitted", Marshaler{EmitDefaults: true}, &pb.SimpleSlice3{}, `{"slices":[]}`},
@@ -442,15 +456,23 @@ var marshalingTests = []struct {
 	{"nested struct null", Marshaler{EmitDefaults: true}, &pb.SimpleNull3{}, `{"simple":null}`},
 	{"map<int64, int32>", marshaler, &pb.Mappy{Nummy: map[int64]int32{1: 2, 3: 4}}, `{"nummy":{"1":2,"3":4}}`},
 	{"map<int64, int32>", marshalerAllOptions, &pb.Mappy{Nummy: map[int64]int32{1: 2, 3: 4}}, nummyPrettyJSON},
-	{"map<string, string>", marshaler,
+	{
+		"map<string, string>", marshaler,
 		&pb.Mappy{Strry: map[string]string{`"one"`: "two", "three": "four"}},
-		`{"strry":{"\"one\"":"two","three":"four"}}`},
-	{"map<int32, Object>", marshaler,
-		&pb.Mappy{Objjy: map[int32]*pb.Simple3{1: {Dub: 1}}}, `{"objjy":{"1":{"dub":1}}}`},
-	{"map<int32, Object>", marshalerAllOptions,
-		&pb.Mappy{Objjy: map[int32]*pb.Simple3{1: {Dub: 1}}}, objjyPrettyJSON},
-	{"map<int64, string>", marshaler, &pb.Mappy{Buggy: map[int64]string{1234: "yup"}},
-		`{"buggy":{"1234":"yup"}}`},
+		`{"strry":{"\"one\"":"two","three":"four"}}`,
+	},
+	{
+		"map<int32, Object>", marshaler,
+		&pb.Mappy{Objjy: map[int32]*pb.Simple3{1: {Dub: 1}}}, `{"objjy":{"1":{"dub":1}}}`,
+	},
+	{
+		"map<int32, Object>", marshalerAllOptions,
+		&pb.Mappy{Objjy: map[int32]*pb.Simple3{1: {Dub: 1}}}, objjyPrettyJSON,
+	},
+	{
+		"map<int64, string>", marshaler, &pb.Mappy{Buggy: map[int64]string{1234: "yup"}},
+		`{"buggy":{"1234":"yup"}}`,
+	},
 	{"map<bool, bool>", marshaler, &pb.Mappy{Booly: map[bool]bool{false: true}}, `{"booly":{"false":true}}`},
 	{"map<string, enum>", marshaler, &pb.Mappy{Enumy: map[string]pb.Numeral{"XIV": pb.Numeral_ROMAN}}, `{"enumy":{"XIV":"ROMAN"}}`},
 	{"map<string, enum as int>", Marshaler{EnumsAsInts: true}, &pb.Mappy{Enumy: map[string]pb.Numeral{"XIV": pb.Numeral_ROMAN}}, `{"enumy":{"XIV":2}}`},
@@ -458,15 +480,23 @@ var marshalingTests = []struct {
 	{"map<int64, bool>", marshaler, &pb.Mappy{S64Booly: map[int64]bool{1: true, 3: false, 10: true, 12: false}}, `{"s64booly":{"1":true,"3":false,"10":true,"12":false}}`},
 	{"map<uint32, bool>", marshaler, &pb.Mappy{U32Booly: map[uint32]bool{1: true, 3: false, 10: true, 12: false}}, `{"u32booly":{"1":true,"3":false,"10":true,"12":false}}`},
 	{"map<uint64, bool>", marshaler, &pb.Mappy{U64Booly: map[uint64]bool{1: true, 3: false, 10: true, 12: false}}, `{"u64booly":{"1":true,"3":false,"10":true,"12":false}}`},
-	{"proto2 map<int64, string>", marshaler, &pb.Maps{MInt64Str: map[int64]string{213: "cat"}},
-		`{"mInt64Str":{"213":"cat"}}`},
-	{"proto2 map<bool, Object>", marshaler,
+	{
+		"proto2 map<int64, string>", marshaler, &pb.Maps{MInt64Str: map[int64]string{213: "cat"}},
+		`{"mInt64Str":{"213":"cat"}}`,
+	},
+	{
+		"proto2 map<bool, Object>", marshaler,
 		&pb.Maps{MBoolSimple: map[bool]*pb.Simple{true: {OInt32: proto.Int32(1)}}},
-		`{"mBoolSimple":{"true":{"oInt32":1}}}`},
+		`{"mBoolSimple":{"true":{"oInt32":1}}}`,
+	},
 	{"oneof, not set", marshaler, &pb.MsgWithOneof{}, `{}`},
 	{"oneof, set", marshaler, &pb.MsgWithOneof{Union: &pb.MsgWithOneof_Title{Title: "Grand Poobah"}}, `{"title":"Grand Poobah"}`},
-	{"force orig_name", Marshaler{OrigName: true}, &pb.Simple{OInt32: proto.Int32(4)},
-		`{"o_int32":4}`},
+	{
+		"force orig_name",
+		Marshaler{OrigName: true},
+		&pb.Simple{OInt32: proto.Int32(4)},
+		`{"o_int32":4}`,
+	},
 	{"proto2 extension", marshaler, realNumber, realNumberJSON},
 	{"Any with message", marshaler, anySimple, anySimpleJSON},
 	{"Any with message and indent", marshalerAllOptions, anySimple, anySimplePrettyJSON},
@@ -744,25 +774,39 @@ var unmarshalingTests = []struct {
 	{"unknown field with allowed option", Unmarshaler{AllowUnknownFields: true}, `{"unknown": "foo"}`, new(pb.Simple)},
 	{"proto3 enum string", Unmarshaler{}, `{"hilarity":"PUNS"}`, &proto3pb.Message{Hilarity: proto3pb.Message_PUNS}},
 	{"proto3 enum value", Unmarshaler{}, `{"hilarity":1}`, &proto3pb.Message{Hilarity: proto3pb.Message_PUNS}},
-	{"unknown enum value object",
+	{
+		"unknown enum value object",
 		Unmarshaler{},
 		"{\n  \"color\": 1000,\n  \"r_color\": [\n    \"RED\"\n  ]\n}",
-		&pb.Widget{Color: pb.Widget_Color(1000).Enum(), RColor: []pb.Widget_Color{pb.Widget_RED}}},
-	{"repeated proto3 enum", Unmarshaler{}, `{"rFunny":["PUNS","SLAPSTICK"]}`,
+		&pb.Widget{Color: pb.Widget_Color(1000).Enum(), RColor: []pb.Widget_Color{pb.Widget_RED}},
+	},
+	{
+		"repeated proto3 enum",
+		Unmarshaler{},
+		`{"rFunny":["PUNS","SLAPSTICK"]}`,
 		&proto3pb.Message{RFunny: []proto3pb.Message_Humour{
 			proto3pb.Message_PUNS,
 			proto3pb.Message_SLAPSTICK,
-		}}},
-	{"repeated proto3 enum as int", Unmarshaler{}, `{"rFunny":[1,2]}`,
+		}},
+	},
+	{
+		"repeated proto3 enum as int",
+		Unmarshaler{},
+		`{"rFunny":[1,2]}`,
 		&proto3pb.Message{RFunny: []proto3pb.Message_Humour{
 			proto3pb.Message_PUNS,
 			proto3pb.Message_SLAPSTICK,
-		}}},
-	{"repeated proto3 enum as mix of strings and ints", Unmarshaler{}, `{"rFunny":["PUNS",2]}`,
+		}},
+	},
+	{
+		"repeated proto3 enum as mix of strings and ints",
+		Unmarshaler{},
+		`{"rFunny":["PUNS",2]}`,
 		&proto3pb.Message{RFunny: []proto3pb.Message_Humour{
 			proto3pb.Message_PUNS,
 			proto3pb.Message_SLAPSTICK,
-		}}},
+		}},
+	},
 	{"unquoted int64 object", Unmarshaler{}, `{"oInt64":-314}`, &pb.Simple{OInt64: proto.Int64(-314)}},
 	{"unquoted uint64 object", Unmarshaler{}, `{"oUint64":123}`, &pb.Simple{OUint64: proto.Uint64(123)}},
 	{"NaN", Unmarshaler{}, `{"oDouble":"NaN"}`, &pb.Simple{ODouble: proto.Float64(math.NaN())}},
@@ -838,7 +882,8 @@ var unmarshalingTests = []struct {
 					},
 				}}},
 			},
-		}}}}},
+		}},
+	}}},
 
 	{"DoubleValue", Unmarshaler{}, `{"dbl":1.2}`, &pb.KnownTypes{Dbl: &types.DoubleValue{Value: 1.2}}},
 	{"FloatValue", Unmarshaler{}, `{"flt":1.2}`, &pb.KnownTypes{Flt: &types.FloatValue{Value: 1.2}}},
@@ -849,13 +894,17 @@ var unmarshalingTests = []struct {
 	{"BoolValue", Unmarshaler{}, `{"bool":true}`, &pb.KnownTypes{Bool: &types.BoolValue{Value: true}}},
 	{"StringValue", Unmarshaler{}, `{"str":"plush"}`, &pb.KnownTypes{Str: &types.StringValue{Value: "plush"}}},
 	{"StringValue containing escaped character", Unmarshaler{}, `{"str":"a\/b"}`, &pb.KnownTypes{Str: &types.StringValue{Value: "a/b"}}},
-	{"StructValue containing StringValue's", Unmarshaler{}, `{"escaped": "a\/b", "unicode": "\u00004E16\u0000754C"}`,
+	{
+		"StructValue containing StringValue's",
+		Unmarshaler{},
+		`{"escaped": "a\/b", "unicode": "\u00004E16\u0000754C"}`,
 		&types.Struct{
 			Fields: map[string]*types.Value{
 				"escaped": {Kind: &types.Value_StringValue{StringValue: "a/b"}},
 				"unicode": {Kind: &types.Value_StringValue{StringValue: "\u00004E16\u0000754C"}},
 			},
-		}},
+		},
+	},
 	{"BytesValue", Unmarshaler{}, `{"bytes":"d293"}`, &pb.KnownTypes{Bytes: &types.BytesValue{Value: []byte("wow")}}},
 	// Ensure that `null` as a value ends up with a nil pointer instead of a [type]Value struct.
 	{"null DoubleValue", Unmarshaler{}, `{"dbl":null}`, &pb.KnownTypes{Dbl: nil}},

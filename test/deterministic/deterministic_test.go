@@ -30,8 +30,9 @@ package deterministic
 
 import (
 	"bytes"
-	"github.com/gogo/protobuf/proto"
 	"testing"
+
+	"github.com/waynz0r/protobuf/proto"
 )
 
 func getTestMap() map[string]string {
@@ -51,7 +52,6 @@ func getTestMap() map[string]string {
 		"m": "13",
 		"n": "14",
 	}
-
 }
 
 func TestOrderedMap(t *testing.T) {

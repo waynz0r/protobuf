@@ -31,8 +31,8 @@ package main
 import (
 	"strings"
 
-	"github.com/gogo/protobuf/vanity"
-	"github.com/gogo/protobuf/vanity/command"
+	"github.com/waynz0r/protobuf/vanity"
+	"github.com/waynz0r/protobuf/vanity/command"
 )
 
 func main() {
@@ -57,7 +57,7 @@ func main() {
 		if strings.HasSuffix(file.GetName(), "struct.proto") {
 			// TODO struct can also get a compare method when
 			// https://github.com/gogo/protobuf/issues/221 is fixed
-			//continue
+			// continue
 		}
 		vanity.TurnOnCompareAll(file)
 	}

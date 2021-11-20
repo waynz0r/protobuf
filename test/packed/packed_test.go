@@ -37,11 +37,11 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 )
 
 func BenchmarkVarintIssue436withCount(b *testing.B) {
-	var arraySizes = []struct {
+	arraySizes := []struct {
 		name  string
 		value int64
 	}{
@@ -56,7 +56,7 @@ func BenchmarkVarintIssue436withCount(b *testing.B) {
 		{"2^24_ints", 1 << 24},
 	}
 
-	var varintSizes = []struct {
+	varintSizes := []struct {
 		name  string
 		value int64
 	}{

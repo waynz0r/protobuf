@@ -36,7 +36,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 )
 
 var tests = []struct {
@@ -47,22 +47,30 @@ var tests = []struct {
 	// The timestamp representing the Unix epoch date.
 	{&Timestamp{Seconds: 0, Nanos: 0}, true, utcDate(1970, 1, 1)},
 	// The smallest representable timestamp.
-	{&Timestamp{Seconds: math.MinInt64, Nanos: math.MinInt32}, false,
-		time.Unix(math.MinInt64, math.MinInt32).UTC()},
+	{
+		&Timestamp{Seconds: math.MinInt64, Nanos: math.MinInt32}, false,
+		time.Unix(math.MinInt64, math.MinInt32).UTC(),
+	},
 	// The smallest representable timestamp with non-negative nanos.
 	{&Timestamp{Seconds: math.MinInt64, Nanos: 0}, false, time.Unix(math.MinInt64, 0).UTC()},
 	// The earliest valid timestamp.
 	{&Timestamp{Seconds: minValidSeconds, Nanos: 0}, true, utcDate(1, 1, 1)},
 	//"0001-01-01T00:00:00Z"},
 	// The largest representable timestamp.
-	{&Timestamp{Seconds: math.MaxInt64, Nanos: math.MaxInt32}, false,
-		time.Unix(math.MaxInt64, math.MaxInt32).UTC()},
+	{
+		&Timestamp{Seconds: math.MaxInt64, Nanos: math.MaxInt32}, false,
+		time.Unix(math.MaxInt64, math.MaxInt32).UTC(),
+	},
 	// The largest representable timestamp with nanos in range.
-	{&Timestamp{Seconds: math.MaxInt64, Nanos: 1e9 - 1}, false,
-		time.Unix(math.MaxInt64, 1e9-1).UTC()},
+	{
+		&Timestamp{Seconds: math.MaxInt64, Nanos: 1e9 - 1}, false,
+		time.Unix(math.MaxInt64, 1e9-1).UTC(),
+	},
 	// The largest valid timestamp.
-	{&Timestamp{Seconds: maxValidSeconds - 1, Nanos: 1e9 - 1}, true,
-		time.Date(9999, 12, 31, 23, 59, 59, 1e9-1, time.UTC)},
+	{
+		&Timestamp{Seconds: maxValidSeconds - 1, Nanos: 1e9 - 1}, true,
+		time.Date(9999, 12, 31, 23, 59, 59, 1e9-1, time.UTC),
+	},
 	// The smallest invalid timestamp that is larger than the valid range.
 	{&Timestamp{Seconds: maxValidSeconds, Nanos: 0}, false, time.Unix(maxValidSeconds, 0).UTC()},
 	// A date before the epoch.
@@ -70,8 +78,10 @@ var tests = []struct {
 	// A date after the epoch.
 	{&Timestamp{Seconds: 1296000000, Nanos: 0}, true, utcDate(2011, 1, 26)},
 	// A date after the epoch, in the middle of the day.
-	{&Timestamp{Seconds: 1296012345, Nanos: 940483}, true,
-		time.Date(2011, 1, 26, 3, 25, 45, 940483, time.UTC)},
+	{
+		&Timestamp{Seconds: 1296012345, Nanos: 940483}, true,
+		time.Date(2011, 1, 26, 3, 25, 45, 940483, time.UTC),
+	},
 }
 
 func TestValidateTimestamp(t *testing.T) {

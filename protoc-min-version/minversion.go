@@ -34,7 +34,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/gogo/protobuf/version"
+	"github.com/waynz0r/protobuf/version"
 )
 
 func filter(ss []string, flag string) ([]string, string) {

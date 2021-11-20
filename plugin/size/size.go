@@ -63,7 +63,7 @@ The following message:
   message B {
 	option (gogoproto.description) = true;
 	optional A A = 1 [(gogoproto.nullable) = false, (gogoproto.embed) = true];
-	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/gogo/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
+	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/waynz0r/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
   }
 
 given to the size plugin, will generate the following code:
@@ -128,11 +128,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/proto"
-	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	"github.com/gogo/protobuf/vanity"
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/proto"
+	descriptor "github.com/waynz0r/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
+	"github.com/waynz0r/protobuf/vanity"
 )
 
 type size struct {
@@ -581,8 +581,8 @@ func (p *size) Generate(file *generator.FileDescriptor) {
 	p.PluginImports = generator.NewPluginImports(p.Generator)
 	p.atleastOne = false
 	p.localName = generator.FileName(file)
-	p.typesPkg = p.NewImport("github.com/gogo/protobuf/types")
-	protoPkg := p.NewImport("github.com/gogo/protobuf/proto")
+	p.typesPkg = p.NewImport("github.com/waynz0r/protobuf/types")
+	protoPkg := p.NewImport("github.com/waynz0r/protobuf/proto")
 	p.bitsPkg = p.NewImport("math/bits")
 	if !gogoproto.ImportsGoGoProto(file.FileDescriptorProto) {
 		protoPkg = p.NewImport("github.com/golang/protobuf/proto")
@@ -657,7 +657,7 @@ func (p *size) Generate(file *generator.FileDescriptor) {
 		p.P(`}`)
 		p.P()
 
-		//Generate Size methods for oneof fields
+		// Generate Size methods for oneof fields
 		m := proto.Clone(message.DescriptorProto).(*descriptor.DescriptorProto)
 		for _, f := range m.Field {
 			oneof := f.OneofIndex != nil
@@ -688,7 +688,6 @@ func (p *size) Generate(file *generator.FileDescriptor) {
 
 	p.sizeVarint()
 	p.sizeZigZag()
-
 }
 
 func init() {

@@ -36,9 +36,9 @@ import (
 	"math"
 	"testing"
 
-	. "github.com/gogo/protobuf/proto"
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	. "github.com/gogo/protobuf/proto/test_proto"
+	. "github.com/waynz0r/protobuf/proto"
+	proto3pb "github.com/waynz0r/protobuf/proto/proto3_proto"
+	. "github.com/waynz0r/protobuf/proto/test_proto"
 )
 
 type UnmarshalTextTest struct {
@@ -678,7 +678,6 @@ func TestOneofParsing(t *testing.T) {
 		t.Errorf("TestOneofParsing: Incorrect error.\nHave: %v\nWant: %v",
 			err.Error(), testErr)
 	}
-
 }
 
 var benchInput string

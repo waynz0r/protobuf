@@ -40,17 +40,16 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	pb "github.com/gogo/protobuf/proto/test_proto"
-	"github.com/gogo/protobuf/types"
+	proto3pb "github.com/waynz0r/protobuf/proto/proto3_proto"
+	pb "github.com/waynz0r/protobuf/proto/test_proto"
+	"github.com/waynz0r/protobuf/types"
 )
 
 // textMessage implements the methods that allow it to marshal and unmarshal
 // itself as text.
-type textMessage struct {
-}
+type textMessage struct{}
 
 func (*textMessage) MarshalText() ([]byte, error) {
 	return []byte("custom"), nil
@@ -186,6 +185,7 @@ func TestMarshalTextCustomMessage(t *testing.T) {
 		t.Errorf("Got %q, expected %q", s, "custom")
 	}
 }
+
 func TestMarshalTextNil(t *testing.T) {
 	want := "<nil>"
 	tests := []proto.Message{nil, (*pb.MyMessage)(nil)}
@@ -363,7 +363,7 @@ type limitedWriter struct {
 var outOfSpace = errors.New("proto: insufficient space")
 
 func (w *limitedWriter) Write(p []byte) (n int, err error) {
-	var avail = w.limit - w.b.Len()
+	avail := w.limit - w.b.Len()
 	if avail <= 0 {
 		return 0, outOfSpace
 	}

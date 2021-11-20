@@ -39,7 +39,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gogo/protobuf/version"
+	"github.com/waynz0r/protobuf/version"
 )
 
 type MixMatch struct {
@@ -70,7 +70,7 @@ func (this MixMatch) Gen(folder string, news []string) {
 		panic(err)
 	}
 	args := append(this.Args, filepath.Join(folder, this.Filename))
-	var regenerate = exec.Command("protoc", args...)
+	regenerate := exec.Command("protoc", args...)
 	out, err := regenerate.CombinedOutput()
 
 	failed := false

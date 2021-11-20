@@ -3,12 +3,12 @@ package jsonpb_gogo
 import (
 	"testing"
 
-	"github.com/gogo/protobuf/jsonpb"
+	"github.com/waynz0r/protobuf/jsonpb"
 )
 
 // customFieldMessage implements protobuf.Message but is not a normal generated message type.
 type customFieldMessage struct {
-	someField string //this is not a proto field
+	someField string // this is not a proto field
 }
 
 func (m *customFieldMessage) Reset() {

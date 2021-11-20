@@ -29,8 +29,9 @@
 package io
 
 import (
-	"github.com/gogo/protobuf/proto"
 	"io"
+
+	"github.com/waynz0r/protobuf/proto"
 )
 
 type Writer interface {

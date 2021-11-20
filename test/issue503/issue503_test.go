@@ -30,9 +30,10 @@ package issue503
 
 import (
 	"fmt"
-	"github.com/gogo/protobuf/proto"
 	"math/rand"
 	"testing"
+
+	"github.com/waynz0r/protobuf/proto"
 )
 
 // Original test case submitted by issue creator

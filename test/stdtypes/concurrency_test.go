@@ -5,7 +5,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 )
 
 func TestConcurrentTextMarshal(t *testing.T) {
@@ -17,15 +17,28 @@ func TestConcurrentTextMarshal(t *testing.T) {
 
 	tm := proto.TextMarshaler{}
 
+	// use a channel to hand off the error
+	errs := make(chan error, 2)
+
 	for i := 0; i < 2; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			err := tm.Marshal(ioutil.Discard, &std)
 			if err != nil {
-				t.Fatal(err)
+				errs <- err
 			}
 		}()
 	}
-	wg.Wait()
+
+	go func() {
+		wg.Wait()
+		close(errs)
+	}()
+
+	for err := range errs {
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
 }

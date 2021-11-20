@@ -12,18 +12,22 @@ It has these top-level messages:
 */
 package typedeclimport
 
-import proto "github.com/gogo/protobuf/proto"
-import fmt "fmt"
-import math "math"
-import _ "github.com/gogo/protobuf/gogoproto"
-import subpkg "github.com/gogo/protobuf/test/typedeclimport/subpkg"
+import (
+	fmt "fmt"
+	_ "github.com/waynz0r/protobuf/gogoproto"
+	proto "github.com/waynz0r/protobuf/proto"
+	subpkg "github.com/waynz0r/protobuf/test/typedeclimport/subpkg"
+	math "math"
+)
 
 import io "io"
 
 // Reference imports to suppress errors if they are not otherwise used.
-var _ = proto.Marshal
-var _ = fmt.Errorf
-var _ = math.Inf
+var (
+	_ = proto.Marshal
+	_ = fmt.Errorf
+	_ = math.Inf
+)
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the proto package it is being compiled against.
@@ -46,6 +50,7 @@ func (m *SomeMessage) GetImported() subpkg.AnotherMessage {
 func init() {
 	proto.RegisterType((*SomeMessage)(nil), "typedeclimport.SomeMessage")
 }
+
 func (this *SomeMessage) VerboseEqual(that interface{}) error {
 	if that == nil {
 		if this == nil {
@@ -76,6 +81,7 @@ func (this *SomeMessage) VerboseEqual(that interface{}) error {
 	}
 	return nil
 }
+
 func (this *SomeMessage) Equal(that interface{}) bool {
 	if that == nil {
 		if this == nil {
@@ -106,6 +112,7 @@ func (this *SomeMessage) Equal(that interface{}) bool {
 	}
 	return true
 }
+
 func (m *SomeMessage) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -143,6 +150,7 @@ func encodeFixed64Typedeclimport(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset+7] = uint8(v >> 56)
 	return offset + 8
 }
+
 func encodeFixed32Typedeclimport(dAtA []byte, offset int, v uint32) int {
 	dAtA[offset] = uint8(v)
 	dAtA[offset+1] = uint8(v >> 8)
@@ -150,6 +158,7 @@ func encodeFixed32Typedeclimport(dAtA []byte, offset int, v uint32) int {
 	dAtA[offset+3] = uint8(v >> 24)
 	return offset + 4
 }
+
 func encodeVarintTypedeclimport(dAtA []byte, offset int, v uint64) int {
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
@@ -159,6 +168,7 @@ func encodeVarintTypedeclimport(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return offset + 1
 }
+
 func (m *SomeMessage) Size() (n int) {
 	var l int
 	_ = l
@@ -177,9 +187,11 @@ func sovTypedeclimport(x uint64) (n int) {
 	}
 	return n
 }
+
 func sozTypedeclimport(x uint64) (n int) {
 	return sovTypedeclimport(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
+
 func (m *SomeMessage) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -260,6 +272,7 @@ func (m *SomeMessage) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+
 func skipTypedeclimport(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0

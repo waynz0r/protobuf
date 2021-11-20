@@ -36,9 +36,9 @@ import (
 	"strings"
 	"testing"
 
-	. "github.com/gogo/protobuf/proto"
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	pb "github.com/gogo/protobuf/proto/test_proto"
+	. "github.com/waynz0r/protobuf/proto"
+	proto3pb "github.com/waynz0r/protobuf/proto/proto3_proto"
+	pb "github.com/waynz0r/protobuf/proto/test_proto"
 )
 
 var messageWithExtension1 = &pb.MyMessage{Count: Int32(7)}
@@ -56,7 +56,6 @@ func init() {
 
 	// Force messageWithExtension3 to have the extension encoded.
 	Marshal(messageWithExtension3)
-
 }
 
 // non-pointer custom message

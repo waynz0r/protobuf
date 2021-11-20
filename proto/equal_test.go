@@ -34,24 +34,28 @@ package proto_test
 import (
 	"testing"
 
-	. "github.com/gogo/protobuf/proto"
-	proto3pb "github.com/gogo/protobuf/proto/proto3_proto"
-	pb "github.com/gogo/protobuf/proto/test_proto"
+	. "github.com/waynz0r/protobuf/proto"
+	proto3pb "github.com/waynz0r/protobuf/proto/proto3_proto"
+	pb "github.com/waynz0r/protobuf/proto/test_proto"
 )
 
 // Four identical base messages.
 // The init function adds extensions to some of them.
-var messageWithoutExtension = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension1a = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension1b = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension2 = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension3a = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension3b = &pb.MyMessage{Count: Int32(7)}
-var messageWithExtension3c = &pb.MyMessage{Count: Int32(7)}
+var (
+	messageWithoutExtension = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension1a  = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension1b  = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension2   = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension3a  = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension3b  = &pb.MyMessage{Count: Int32(7)}
+	messageWithExtension3c  = &pb.MyMessage{Count: Int32(7)}
+)
 
 // Two messages with non-message extensions.
-var messageWithInt32Extension1 = &pb.MyMessage{Count: Int32(8)}
-var messageWithInt32Extension2 = &pb.MyMessage{Count: Int32(8)}
+var (
+	messageWithInt32Extension1 = &pb.MyMessage{Count: Int32(8)}
+	messageWithInt32Extension2 = &pb.MyMessage{Count: Int32(8)}
+)
 
 func init() {
 	ext1 := &pb.Ext{Data: String("Kirk")}

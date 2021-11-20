@@ -34,15 +34,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 )
 
-//func SetRawExtension(base extendableProto, id int32, b []byte) {
-//func HasExtension(pb extendableProto, extension *ExtensionDesc) bool {
-//func ClearExtension(pb extendableProto, extension *ExtensionDesc) {
-//func GetExtension(pb extendableProto, extension *ExtensionDesc) (interface{}, error) {
-//func GetExtensions(pb Message, es []*ExtensionDesc) (extensions []interface{}, err error) {
-//func SetExtension(pb extendableProto, extension *ExtensionDesc, value interface{}) error {
+// func SetRawExtension(base extendableProto, id int32, b []byte) {
+// func HasExtension(pb extendableProto, extension *ExtensionDesc) bool {
+// func ClearExtension(pb extendableProto, extension *ExtensionDesc) {
+// func GetExtension(pb extendableProto, extension *ExtensionDesc) (interface{}, error) {
+// func GetExtensions(pb Message, es []*ExtensionDesc) (extensions []interface{}, err error) {
+// func SetExtension(pb extendableProto, extension *ExtensionDesc, value interface{}) error {
 
 type extendable interface {
 	proto.Message
@@ -75,9 +75,11 @@ func check(t *testing.T, m extendable, fieldA float64, ext *proto.ExtensionDesc)
 	}
 }
 
-var fieldA float64
-var fieldABytes []byte
-var extr = math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+var (
+	fieldA      float64
+	fieldABytes []byte
+	extr        = math_rand.New(math_rand.NewSource(time.Now().UnixNano()))
+)
 
 func init() {
 	fieldA = float64(1.1)
@@ -145,7 +147,7 @@ func TestUnsafeExtension(t *testing.T) {
 	check(t, m, fieldA, E_FieldA)
 }
 
-//See another version of this test in proto/extensions_test.go
+// See another version of this test in proto/extensions_test.go
 func TestGetExtensionStability(t *testing.T) {
 	check := func(m *NoExtensionsMap) bool {
 		ext1, err := proto.GetExtension(m, E_FieldB1)

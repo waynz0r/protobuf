@@ -55,7 +55,7 @@ The following message:
   message A {
 	optional string Description = 1 [(gogoproto.nullable) = false];
 	optional int64 Number = 2 [(gogoproto.nullable) = false];
-	optional bytes Id = 3 [(gogoproto.customtype) = "github.com/gogo/protobuf/test/custom.Uuid", (gogoproto.nullable) = false];
+	optional bytes Id = 3 [(gogoproto.customtype) = "github.com/waynz0r/protobuf/test/custom.Uuid", (gogoproto.nullable) = false];
   }
 
 given to the stringer stringer, will generate the following code:
@@ -93,9 +93,10 @@ not print their values, while the generated String method will always print all 
 package stringer
 
 import (
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"strings"
+
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
 )
 
 type stringer struct {
@@ -127,8 +128,8 @@ func (p *stringer) Generate(file *generator.FileDescriptor) {
 	fmtPkg := p.NewImport("fmt")
 	stringsPkg := p.NewImport("strings")
 	reflectPkg := p.NewImport("reflect")
-	sortKeysPkg := p.NewImport("github.com/gogo/protobuf/sortkeys")
-	protoPkg := p.NewImport("github.com/gogo/protobuf/proto")
+	sortKeysPkg := p.NewImport("github.com/waynz0r/protobuf/sortkeys")
+	protoPkg := p.NewImport("github.com/waynz0r/protobuf/proto")
 	for _, message := range file.Messages() {
 		if !gogoproto.IsStringer(file.FileDescriptorProto, message.DescriptorProto) {
 			continue
@@ -290,7 +291,7 @@ func (p *stringer) Generate(file *generator.FileDescriptor) {
 		p.Out()
 		p.P(`}`)
 
-		//Generate String methods for oneof fields
+		// Generate String methods for oneof fields
 		for _, field := range message.Field {
 			oneof := field.OneofIndex != nil
 			if !oneof {
@@ -339,7 +340,6 @@ func (p *stringer) Generate(file *generator.FileDescriptor) {
 	p.P(`return `, fmtPkg.Use(), `.Sprintf("*%v", pv)`)
 	p.Out()
 	p.P(`}`)
-
 }
 
 func init() {

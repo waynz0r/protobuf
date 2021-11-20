@@ -38,9 +38,10 @@ package oneofcheck
 
 import (
 	"fmt"
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"os"
+
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
 )
 
 type plugin struct {

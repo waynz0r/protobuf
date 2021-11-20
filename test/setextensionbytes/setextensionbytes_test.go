@@ -31,7 +31,7 @@ package setextensionbytes
 import (
 	"testing"
 
-	"github.com/gogo/protobuf/proto"
+	"github.com/waynz0r/protobuf/proto"
 )
 
 func TestSetextensionBytesTwiceBeforeGet(t *testing.T) {

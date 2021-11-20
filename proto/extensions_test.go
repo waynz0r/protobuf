@@ -40,8 +40,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gogo/protobuf/proto"
-	pb "github.com/gogo/protobuf/proto/test_proto"
+	"github.com/waynz0r/protobuf/proto"
+	pb "github.com/waynz0r/protobuf/proto/test_proto"
 )
 
 func TestGetExtensionsWithMissingExtensions(t *testing.T) {
@@ -258,11 +258,11 @@ func TestGetExtensionDefaults(t *testing.T) {
 	var setInt64 int64 = 4
 	var setUint32 uint32 = 5
 	var setUint64 uint64 = 6
-	var setBool = true
-	var setBool2 = false
-	var setString = "Goodnight string"
-	var setBytes = []byte("Goodnight bytes")
-	var setEnum = pb.DefaultsMessage_TWO
+	setBool := true
+	setBool2 := false
+	setString := "Goodnight string"
+	setBytes := []byte("Goodnight bytes")
+	setEnum := pb.DefaultsMessage_TWO
 
 	type testcase struct {
 		ext  *proto.ExtensionDesc // Extension we are testing.
@@ -623,7 +623,6 @@ func TestUnmarshalRepeatingNonRepeatedExtension(t *testing.T) {
 		}
 		if !proto.Equal(ext, &want) {
 			t.Errorf("[%s] Wrong value for ComplexExtension: got: %v want: %v\n", test.name, ext, &want)
-
 		}
 	}
 }

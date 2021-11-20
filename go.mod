@@ -1,9 +1,11 @@
-module github.com/gogo/protobuf
+module github.com/waynz0r/protobuf
 
 go 1.15
 
 require (
-	github.com/kisielk/errcheck v1.5.0 // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/kisielk/errcheck v1.6.0 // indirect
 	github.com/kisielk/gotool v1.0.0 // indirect
-	golang.org/x/tools v0.0.0-20210106214847-113979e3529a // indirect
+	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
+	golang.org/x/tools v0.1.7 // indirect
 )

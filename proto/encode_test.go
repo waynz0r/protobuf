@@ -29,6 +29,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+//go:build go1.7
 // +build go1.7
 
 package proto_test
@@ -36,13 +37,11 @@ package proto_test
 import (
 	"testing"
 
-	"github.com/gogo/protobuf/proto"
-	tpb "github.com/gogo/protobuf/proto/proto3_proto"
+	"github.com/waynz0r/protobuf/proto"
+	tpb "github.com/waynz0r/protobuf/proto/proto3_proto"
 )
 
-var (
-	blackhole []byte
-)
+var blackhole []byte
 
 // Disabled this Benchmark because it is using features (b.Run) from go1.7 and gogoprotobuf still have compatibility with go1.5
 // BenchmarkAny creates increasingly large arbitrary Any messages.  The type is always the

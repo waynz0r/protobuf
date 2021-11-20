@@ -40,8 +40,8 @@ This package is subject to change.
 package enumstringer
 
 import (
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
 )
 
 type enumstringer struct {
@@ -96,7 +96,6 @@ func (p *enumstringer) Generate(file *generator.FileDescriptor) {
 	if !p.atleastOne {
 		return
 	}
-
 }
 
 func init() {

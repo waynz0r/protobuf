@@ -49,7 +49,7 @@ The following message:
 
   message B {
 	optional A A = 1 [(gogoproto.nullable) = false, (gogoproto.embed) = true];
-	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/gogo/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
+	repeated bytes G = 2 [(gogoproto.customtype) = "github.com/waynz0r/protobuf/test/custom.Uint128", (gogoproto.nullable) = false];
   }
 
 given to the populate plugin, will generate code the following code:
@@ -89,11 +89,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gogo/protobuf/gogoproto"
-	"github.com/gogo/protobuf/proto"
-	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
-	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	"github.com/gogo/protobuf/vanity"
+	"github.com/waynz0r/protobuf/gogoproto"
+	"github.com/waynz0r/protobuf/proto"
+	descriptor "github.com/waynz0r/protobuf/protoc-gen-gogo/descriptor"
+	"github.com/waynz0r/protobuf/protoc-gen-gogo/generator"
+	"github.com/waynz0r/protobuf/vanity"
 )
 
 type VarGen interface {
@@ -502,7 +502,7 @@ func (p *plugin) hasLoop(pkg string, field *descriptor.FieldDescriptorProto, vis
 }
 
 func (p *plugin) loops(pkg string, field *descriptor.FieldDescriptorProto, message *generator.Descriptor) int {
-	//fmt.Fprintf(os.Stderr, "loops %v %v\n", field.GetTypeName(), generator.CamelCaseSlice(message.TypeName()))
+	// fmt.Fprintf(os.Stderr, "loops %v %v\n", field.GetTypeName(), generator.CamelCaseSlice(message.TypeName()))
 	excludes := []*generator.Descriptor{}
 	loops := 0
 	for {
@@ -511,7 +511,7 @@ func (p *plugin) loops(pkg string, field *descriptor.FieldDescriptorProto, messa
 		if loopTo == nil {
 			break
 		}
-		//fmt.Fprintf(os.Stderr, "loopTo %v\n", generator.CamelCaseSlice(loopTo.TypeName()))
+		// fmt.Fprintf(os.Stderr, "loopTo %v\n", generator.CamelCaseSlice(loopTo.TypeName()))
 		excludes = append(excludes, loopTo)
 		loops++
 	}
@@ -523,9 +523,9 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 	p.PluginImports = generator.NewPluginImports(p.Generator)
 	p.varGen = NewVarGen()
 	proto3 := gogoproto.IsProto3(file.FileDescriptorProto)
-	p.typesPkg = p.NewImport("github.com/gogo/protobuf/types")
+	p.typesPkg = p.NewImport("github.com/waynz0r/protobuf/types")
 	p.localName = generator.FileName(file)
-	protoPkg := p.NewImport("github.com/gogo/protobuf/proto")
+	protoPkg := p.NewImport("github.com/waynz0r/protobuf/proto")
 	if !gogoproto.ImportsGoGoProto(file.FileDescriptorProto) {
 		protoPkg = p.NewImport("github.com/golang/protobuf/proto")
 	}
@@ -676,7 +676,7 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 		p.P(`}`)
 		p.P(``)
 
-		//Generate NewPopulated functions for oneof fields
+		// Generate NewPopulated functions for oneof fields
 		m := proto.Clone(message.DescriptorProto).(*descriptor.DescriptorProto)
 		for _, f := range m.Field {
 			oneof := f.OneofIndex != nil
@@ -807,7 +807,6 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 	p.P(`return dAtA`)
 	p.Out()
 	p.P(`}`)
-
 }
 
 func init() {

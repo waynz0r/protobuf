@@ -51,8 +51,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
-	"github.com/gogo/protobuf/types"
+	"github.com/waynz0r/protobuf/proto"
+	"github.com/waynz0r/protobuf/types"
 )
 
 const (
